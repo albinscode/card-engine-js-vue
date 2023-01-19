@@ -4,6 +4,7 @@ import { defineProps } from 'vue'
 const props = defineProps({
     name: String,
     id: String,
+    style: String,
     urlFront: String,
     urlUrlBack: String,
     flipped: Boolean,
@@ -12,7 +13,7 @@ const props = defineProps({
 
 <template>
 
-<div class="card" :title="id">
+<div class="card" :title="id" :style="style">
     <div>{{ name }}</div>
     <div>{{ content }}</div>
     <img v-if="flipped" :src="urlBack" class="img" />
@@ -26,6 +27,7 @@ const props = defineProps({
     min-width: 100px;
     min-height: 200px;
     border: 1px solid;
+    background: lightgrey;
 }
 .card .img {
     width: 100px;

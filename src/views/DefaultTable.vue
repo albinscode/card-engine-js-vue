@@ -1,12 +1,31 @@
 <script setup lang="ts">
 import Zone from '../components/Zone.vue'
-const cards = [{
-    id: 'autogen',
-    name: 'bonding',
-    urlFront: 'https://vdb.im/images/cards/en-EN/bonding.jpg',
-    urlBack: 'https://vdb.im/images/cards/en-EN/bonding.jpg',
-    },
-]
+import { onMounted } from 'vue'
+import { useCardsStore } from '../stores/cards.ts'
+
+/* onMounted(() => { */
+    const cards = [{
+        id: 'autogen',
+        name: 'bonding',
+        urlFront: 'https://vdb.im/images/cards/en-EN/bonding.jpg',
+        urlBack: 'https://vdb.im/images/cards/en-EN/bonding.jpg',
+        },
+        {
+        id: 'autogen2',
+        name: 'bonding',
+        urlFront: 'https://vdb.im/images/cards/en-EN/bonding.jpg',
+        urlBack: 'https://vdb.im/images/cards/en-EN/bonding.jpg',
+        },
+        {
+        id: 'autogen3',
+        name: 'blood dool',
+        urlFront: 'https://vdb.im/images/cards/en-EN/blooddoll.jpg',
+        urlBack: 'https://vdb.im/images/cards/en-EN/blooddoll.jpg',
+        },
+    ]
+    const store = useCardsStore()
+    store.addCards('deck1', cards)
+/* }) */
 </script>
 
 <template>
@@ -14,7 +33,7 @@ const cards = [{
       <Zone class="zone zone-line1" id="uncontrolled1" name="Uncontrolled Region"></Zone>
       <div class="zone-deck-crypt">
           <Zone class="zone" id="crypt1" name="Crypt"></Zone>
-          <Zone class="zone" id="deck1" name="Deck" :cards="cards"></Zone>
+          <Zone class="zone" id="deck1" name="Deck"></Zone>
       </div>
   </div>
 </template>
@@ -26,7 +45,7 @@ const cards = [{
     flex-direction: column;
 }
 .zone {
-    min-height: 300px;
+    min-height: 200px;
     min-width: 150px;
     border: 1px solid;
 }
