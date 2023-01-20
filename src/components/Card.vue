@@ -4,7 +4,7 @@ import { defineProps } from 'vue'
 import type { ICard } from '@/interfaces/ICard'
 
 // props need some UI properties
-export interface ICardProps extends ICard { 
+export interface ICardProps extends ICard {
     zoneId: string,
     style: string,
 }
@@ -16,11 +16,11 @@ function dragStart(evt: DragEvent) {
   if (evt.dataTransfer != null) {
     evt.dataTransfer.dropEffect = 'move'
     evt.dataTransfer.effectAllowed = 'move'
-    
+
     // data to pass to the drop event
     evt.dataTransfer.setData('cardId', props.id)
     evt.dataTransfer.setData('zoneId', props.zoneId)
-    
+
     // setting image seen while doing drag
     let img: HTMLImageElement = new Image();
     img.src = props.urlFront;
@@ -50,14 +50,3 @@ them in the zone space -->
 
 </template>
 
-<style>
-.card {
-    min-width: 100px;
-    min-height: 200px;
-    border: 1px solid;
-    background: lightgrey;
-}
-.card .img {
-    width: 100px;
-}
-</style>
