@@ -3,6 +3,7 @@ import Zone from '@/components/Zone.vue'
 import { onMounted } from 'vue'
 import { useCardsStore } from '@/stores/cards'
 import { ZoneLayouts } from '@/interfaces/IZone'
+import { storeToRefs } from 'pinia'
 
 // FIXME put it into jsonserver
 const cards = [{
@@ -28,6 +29,8 @@ const cards = [{
     },
 ]
 const store = useCardsStore()
+const { currentCard } = storeToRefs(store)
+
 store.addCards('deck1', cards)
 
 </script>
@@ -63,6 +66,13 @@ store.addCards('deck1', cards)
           <Zone class="zone zone-full" id="hand1" name="Hand"
             layout="row-shifted"
            ></Zone>
+      </div>
+      <div class="card-view" v-if="currentCard.urlFront != null">
+          <img :src="currentCard.urlFront" />
+      </div>
+      <div class="card-context-menu">
+          <div>action1</div>
+          <div>action2</div>
       </div>
   </div>
 </template>
@@ -106,13 +116,13 @@ store.addCards('deck1', cards)
     margin-top: -165px;
 }
 .zone-layout-stack-shifted .card-wrapper:nth-of-type(n+2) {
-    margin-top: -130px;
+    margin-top: -100%;
 }
 .zone-layout-row .card {
     /* margin-right: 20px; */
 }
 .zone-layout-row .card {
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .zone-layout-row-shifted {
@@ -125,6 +135,14 @@ store.addCards('deck1', cards)
 
 .card .img {
     width: 100px;
+}
+
+.card-view {
+  position: absolute;
+  bottom: 0;
+}
+.card-context-menu {
+  /* position: absolute; */
 }
 
 </style>

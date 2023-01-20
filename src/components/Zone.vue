@@ -17,6 +17,8 @@ const cards = computed(() => store.getCards(props.id))
 
 // currently layout of card is coded with css classes on the parent tabletop
 function computeStyle(index: number): string {
+    // FIXME no more used
+    return ''
     if (props.layout == 'row') {
         /* return 'margin-top: 20px' */
     }
@@ -47,8 +49,7 @@ function onDrop(evt: DragEvent) {
 
   <div class="card-zone" :class="'zone-layout-' + layout">
       <div class="card-wrapper" v-for="(card, index) in cards" >
-          <Card :key="card.id" :id="card.id" :style="computeStyle(index)"  :name="card.name"
-            :urlFront="card.urlFront" :urlBack="card.urlBack" :flipped="card.flipped" :zoneId="props.id"></Card>
+          <Card :key="card.id" :style="computeStyle(index)" :zoneId="props.id" :card="card"></Card>
       </div>
   </div>
 </div>

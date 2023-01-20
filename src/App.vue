@@ -2,6 +2,8 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
+<!-- we keep all the processings in HomeView -->
+<!-- the app vue is reserved for router and header/layout -->
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />

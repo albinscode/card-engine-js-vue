@@ -6,6 +6,11 @@ import { ref } from 'vue'
 type ICardsByZone = Record<string, Array<ICard>>
 
 export const useCardsStore = defineStore('cards', () => {
+
+  // current keyboad key pressed
+  const currentKey = ref('')
+  // current card that is displayed by hovering the mouse
+  const currentCard = ref({} as ICard)
   const cardsByZone = ref({} as ICardsByZone)
   const allCards = ref(Array<ICard>())
 
@@ -16,7 +21,7 @@ export const useCardsStore = defineStore('cards', () => {
 
   function addCards(zoneId: string, cards: Array<ICard>) {
     if (!cardsByZone.value[zoneId]) {
-        cardsByZone.value[zoneId] = Array<ICard>() 
+        cardsByZone.value[zoneId] = Array<ICard>()
     }
     cardsByZone.value[zoneId].push(...cards)
     allCards.value.push(...cards)
@@ -35,7 +40,7 @@ export const useCardsStore = defineStore('cards', () => {
         console.log('Cannot move a card not found!')
     }
   }
-  
+
   function getCards(zoneId: string) {
     if (cardsByZone.value[zoneId]) {
         return cardsByZone.value[zoneId]
@@ -50,6 +55,14 @@ export const useCardsStore = defineStore('cards', () => {
     }
   }
 
-  return { allCards, cardsByZone, addCards, getCards, removeCard, moveCard }
+  function setCurrentCard(card: ICard) {
+    currentCard.value = card
+  }
+
+  function setCurrentKey(key: string) {
+    currentKey.value = key
+  }
+
+  return { currentKey, currentCard, allCards, cardsByZone, addCards, getCards, removeCard, moveCard, setCurrentCard, setCurrentKey }
 })
 
