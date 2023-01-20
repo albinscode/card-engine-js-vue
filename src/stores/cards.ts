@@ -1,23 +1,28 @@
+import type { ICard } from '@/interfaces/ICard'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-// cards are put by zones in a map
-export const useCardsStore = defineStore('cards', () => {
-  const cardsByZone = ref({})
-  const allCards = ref([])
+// cards are put by zones in a map like manner
+type ICardsByZone = Record<string, Array<ICard>>
 
-  function getCardFromId(cardId) {
+export const useCardsStore = defineStore('cards', () => {
+  const cardsByZone = ref({} as ICardsByZone)
+  const allCards = ref(Array<ICard>())
+
+  function getCardFromId(cardId: string) {
       const cards = allCards.value.filter(c => c.id == cardId)
       return cards.length ? cards[0] : null
   }
-  function addCards(zoneId, cards) {
+
+  function addCards(zoneId: string, cards: Array<ICard>) {
     if (!cardsByZone.value[zoneId]) {
-        cardsByZone.value[zoneId] = []
+        cardsByZone.value[zoneId] = Array<ICard>() 
     }
     cardsByZone.value[zoneId].push(...cards)
     allCards.value.push(...cards)
   }
-  function moveCard(zoneIdSource, zoneIdDest, cardId) {
+
+  function moveCard(zoneIdSource: string, zoneIdDest: string, cardId: string) {
     if (!cardsByZone.value[zoneIdDest]) {
         cardsByZone.value[zoneIdDest] = []
     }
@@ -29,18 +34,19 @@ export const useCardsStore = defineStore('cards', () => {
     else {
         console.log('Cannot move a card not found!')
     }
-
   }
-  function getCards(zoneId) {
+  
+  function getCards(zoneId: string) {
     if (cardsByZone.value[zoneId]) {
         return cardsByZone.value[zoneId]
     }
     return []
   }
-  function removeCard(zoneId, cardId) {
+
+  function removeCard(zoneId: string, cardId: string) {
     // FIXME
     if (cardsByZone.value[zoneId]) {
-        cardsByZone.value[zoneId].pop(0)
+        cardsByZone.value[zoneId].pop()
     }
   }
 

@@ -3,13 +3,13 @@
 import { defineProps, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCardsStore } from '../stores/cards'
-import Card from '../components/Card.vue'
+import Card from '@/components/Card.vue'
 
-const props = defineProps({
-    name: String,
-    id: String,
-    organization: String,
-})
+const props = defineProps<{
+    name: string,
+    id: string,
+    organization: string,
+}>()
 
 // we fetch cards from the zone id
 const store = useCardsStore()
@@ -18,7 +18,7 @@ const store = useCardsStore()
 // won't be noticed)
 const cards = computed(() => store.getCards(props.id))
 
-function computeStyle(index: number) {
+function computeStyle(index: number): string {
     if (props.organization == 'test') {
         return ''
     }
@@ -31,24 +31,25 @@ function computeStyle(index: number) {
 }
 
 
-function onDrop(evt) {
+function onDrop(evt: DragEvent) {
   console.log('drop sur une zone')
-  const cardId = evt.dataTransfer.getData('cardId')
-  const zoneIdSource = evt.dataTransfer.getData('zoneId')
-  console.log(cardId)
-  store.moveCard(zoneIdSource, props.id, cardId)
+  if (evt.dataTransfer != null) {
+    const cardId = evt.dataTransfer.getData('cardId')
+    const zoneIdSource = evt.dataTransfer.getData('zoneId')
+    store.moveCard(zoneIdSource, props.id, cardId)
+  }
 }
 
 </script>
 
 <template>
 
-<div :title="id" @drop="onDrop($event, id)" @dragover.prevent @dragenter.prevent>
-{{ name }}
+<div :title="id" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
+  <div class="zone-title">{{ name }}</div>
 
   <div v-for="(card, index) in cards">
       <Card :key="card.id" :id="card.id" :style="computeStyle(index)"  :name="card.name"
-        :urlFront="card.urlFront" :zoneId="props.id"></Card>
+        :urlFront="card.urlFront" :urlBack="card.urlBack" :flipped="card.flipped" :zoneId="props.id"></Card>
   </div>
 </div>
 
